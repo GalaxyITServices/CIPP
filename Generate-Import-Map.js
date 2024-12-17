@@ -8,10 +8,11 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 // Adjust the relative path as necessary to point to your routes.json location
-const routesPath = path.join(__dirname, './src/routes.json') // Example path
+const routesPath = path.resolve(__dirname, './src/routes.json'); // Ensure correct absolute path
+const fileURL = new URL(`file://${routesPath}`); // Convert to file URL
 
 // Load routes.json with an import assertion for JSON
-const routes = await import(`file://${routesPath}`, { assert: { type: 'json' } }).then(
+const routes = await import(fileURL.href, { assert: { type: 'json' } }).then(
   (module) => module.default,
 )
 
